@@ -118,7 +118,7 @@
     const S = C.sign[sg], mood = tired ? C.tired : (change ? C.change : C.steady);
     const parts = [
       ['', C.opening], [`${D.signs[sg]}の、もうひとつの顔`, S.inner],
-      [`18のこたえが見せた「${tn}」の心`, C.type[code]], ['', mood], ['', S.hurt], ['', S.gift],
+      [`18のこたえが見せた「${tn}」の心`, C.type[code]], ['', mood], ['', tired ? '' : S.hurt], ['', S.gift],
       [`「${theme}」を選んだあなたへ`, (C.theme && (C.theme[theme] || C.theme['2027年の全体の流れ']))]];
     return parts.filter((x) => x[1]).map(([h, b]) => (h ? `<p class="ch-sub">${esc(h)}</p>` : '') + `<p>${fill(b)}</p>`).join('');
   }

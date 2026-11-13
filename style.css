@@ -157,6 +157,7 @@ ol.wakaru{margin:6px 0 10px;padding:0;list-style:none;counter-reset:w;font-size:
 .card h3+p{margin-top:0}
 
 [hidden]{display:none!important}
+.signs .cc{display:block;font-size:10.5px;line-height:1.35;font-weight:700;margin:3px 2px 0;color:#3a2e26;min-height:2.7em}.sign-catch{font-family:var(--maru);font-weight:900;font-size:20px;margin:8px 0 2px;color:var(--shu2)}
 .bubble-up{margin:10px 0 0!important;font-size:14px!important}.bubble-up:before{left:auto!important;right:52px;top:-8px!important;border:8px solid transparent!important;border-bottom-color:#fff!important;border-top:0!important}
 .hero-top{align-items:end}.hero .hero-kuro img{width:120px}
 .sec-menu{padding:18px 0}.menu3b{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.menu3b a{display:flex;flex-direction:column;align-items:center;text-align:center;text-decoration:none;border-radius:18px;padding:8px 4px 10px;box-shadow:0 4px 0 rgba(0,0,0,.1)}.menu3b img{width:62px;height:62px;object-fit:contain}.menu3b b{font-family:var(--maru);font-weight:900;font-size:16px}.menu3b span{font-size:10.5px;line-height:1.4;margin-top:2px}
