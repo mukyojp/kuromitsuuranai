@@ -115,7 +115,7 @@
       <p>星と数字とこたえ、3つが同じ方向を指しているところが、${call}さんの本当の強みです。2027年は、その強みがいちばん試され、いちばん報われる年になります。</p>
       <div class="hit"><p>当たっていましたか？</p><button type="button" data-hit="1">当たってる！</button><button type="button" data-hit="0">ちょっと違うかも</button><p class="hit-msg" hidden></p></div></div>
       <h2 style="margin-top:30px">${call}さんの運命の一文字</h2>
-      <div class="card" style="text-align:center"><div class="ichi">${esc(ichi['漢字'])}</div><p style="margin:0">${esc(ichi['込める意味'])}。<br>「${esc(theme)}」を占ってほしいあなたを、そっと守る一文字です。</p>
+      <div class="card" style="text-align:center"><div class="shikishi"><div class="ichi">${esc(ichi['漢字'])}</div><span class="rakkan">くろみつ</span></div><p class="fine" style="margin:0 0 8px">※画面の文字は書体です。お申し込み後、書家・夢香が筆で書きます。</p><p style="margin:0">${esc(ichi['込める意味'])}。<br>「${esc(theme)}」を占ってほしいあなたを、そっと守る一文字です。</p>
       <p class="fine" style="margin:10px 0 0">この一文字を、書家・夢香が筆で書き、ご加護の待ち受けや色紙にしてお届けできます。</p></div>
       <div class="toc"><p class="toc-h">ここから本題。${call}さんの2027年を読みます</p>
       <div class="ch"><b>第2章　2027年、運気がいちばん動く月</b><p>${call}さんの2027年でいちばん運気が動くのは、<span class="fuse">〇月</span>です。その月、生まれた日の星に……</p></div>

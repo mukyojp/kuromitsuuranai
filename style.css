@@ -155,4 +155,40 @@ ol.wakaru{margin:6px 0 10px;padding:0;list-style:none;counter-reset:w;font-size:
 .kakuzu{display:flex;justify-content:center;gap:6px;flex-wrap:wrap}.kakuzu span{display:flex;flex-direction:column;align-items:center;background:#fff;border-radius:14px;padding:6px 10px;box-shadow:0 3px 0 rgba(0,0,0,.06);min-width:54px}.kakuzu b{font-family:var(--serif);font-size:30px;line-height:1.2}.kakuzu small{font-size:12px;color:var(--muted)}.kakuzu .ks{border-bottom:4px solid var(--sora)}.kakuzu .km{border-bottom:4px solid var(--momo)}
 .share{text-align:center;margin:14px 0}.share p{margin:0 0 6px;font-size:13px;font-weight:700}.share a{display:inline-block;margin:0 4px;padding:8px 16px;border-radius:999px;background:var(--sumi);color:#fff;text-decoration:none;font-weight:900;font-size:14px}.share a+a{background:#06c755}
 .card h3+p{margin-top:0}
+
+[hidden]{display:none!important}
+/* ===== v12: スマホ1画面目重視・3つの入口で雰囲気を変える ===== */
+.sec-tight{padding:34px 0}
+.khead{display:grid;grid-template-columns:92px 1fr;gap:8px;align-items:center;padding-top:14px}.khead img{width:92px;height:auto;filter:drop-shadow(0 4px 0 rgba(0,0,0,.12))}
+.bubble{position:relative;margin:0;background:#fff;color:var(--ink);border-radius:18px;padding:10px 12px;font-size:13px;font-weight:700;line-height:1.6;box-shadow:0 3px 0 rgba(0,0,0,.08)}.bubble:before{content:"";position:absolute;left:-8px;top:22px;border:8px solid transparent;border-right-color:#fff;border-left:0}.bubble b{color:var(--shu2)}
+.hero-sei{padding-bottom:18px}
+.h1-sei{font-family:var(--maru);font-weight:900;font-size:30px;line-height:1.2;margin:12px 0 2px;text-align:center}.h1-sei span{display:inline-block;background:var(--yama);color:var(--sumi);border-radius:8px;padding:0 8px;margin-right:6px;font-size:.75em;transform:rotate(-3deg)}
+.sub-sei{text-align:center;font-size:13px;font-weight:700;margin:0 0 10px}
+.hero-sei .signs{grid-template-columns:repeat(4,1fr);gap:6px}.hero-sei .signs a{padding:4px 2px 6px;border-radius:14px}.hero-sei .signs img{width:78%}.hero-sei .signs .n{font-size:13px}.hero-sei .signs .d{font-size:9px}.hero-sei .signs .k{font-size:15px;right:5px;top:2px}
+.today:not(.open) a:nth-of-type(n+4){display:none}.today .more{font:inherit;font-family:var(--maru);font-weight:900;background:#fff;border:2px solid var(--line);border-radius:999px;padding:8px;color:var(--ink)}.today.open .more{display:none}
+.axis{display:grid;gap:12px}.axis a{position:relative;display:block;text-decoration:none;border-radius:22px;padding:16px 18px;box-shadow:0 5px 0 rgba(0,0,0,.12);overflow:hidden}
+.axis .ax-t{display:inline-block;font-family:var(--maru);font-weight:900;font-size:12px;border-radius:999px;padding:1px 10px}.axis b{display:block;font-family:var(--serif);font-weight:800;font-size:21px;line-height:1.45;margin:6px 0 2px}.axis .ax-d{display:block;font-size:13px}.axis .ax-go{display:inline-block;margin-top:8px;font-family:var(--maru);font-weight:900;font-size:14px;border-radius:999px;padding:4px 14px}
+.ax-kan{background:radial-gradient(circle at 85% 20%,#3b3f8f,#151735 70%);color:#fff}.ax-kan .ax-t{background:var(--kin);color:var(--sumi)}.ax-kan .ax-go{background:var(--yama);color:var(--sumi)}
+.ax-mei{background:#fbf5e6;color:var(--sumi);border:1px solid #e7d6ae}.ax-mei .ax-t{background:var(--shu);color:#fff}.ax-mei b{font-family:"Yuji Boku",var(--serif);font-weight:400;font-size:24px}.ax-mei .ax-go{background:var(--sumi);color:#fff}
+.juyo{display:grid;gap:16px}.juyo-ph{position:relative;max-width:320px;margin:0 auto}.juyo-ph img{width:100%;border:6px solid #2b2019;outline:1px solid var(--kin);outline-offset:4px}.seal-s{position:absolute;right:-8px;bottom:-10px;background:var(--shu);color:#fff;font-family:var(--serif);font-weight:800;writing-mode:vertical-rl;padding:8px 5px;letter-spacing:.2em}
+.juyo-k{color:var(--kin);font-weight:700;margin:0;font-size:13px;letter-spacing:.1em}.juyo-h{font-family:var(--serif)!important;font-weight:800;font-size:27px!important;margin:4px 0 8px!important;color:#fff}.juyo p{font-size:14px}.juyo-cred{color:var(--kin2);font-weight:700;font-size:13px!important}
+/* 本格鑑定：夜空 */
+.hero-kan{background:radial-gradient(circle at 80% 10%,#4a4fa8 0,#1a1c45 55%,#0e0f2a 100%);color:#fff;padding:0 0 26px!important}
+.hero-kan:before{background:radial-gradient(circle,rgba(255,255,255,.9) 0 1px,transparent 1.5px) 0 0/46px 46px,radial-gradient(circle,rgba(240,220,166,.8) 0 1px,transparent 1.5px) 23px 17px/61px 61px;opacity:.55}
+.h1-kan{font-family:var(--serif);font-weight:800;font-size:25px;line-height:1.5;margin:12px 0 2px;text-align:center}.sub-kan{text-align:center;color:var(--kin2);font-size:12px;font-weight:700;margin:0 0 12px;letter-spacing:.04em}
+.hero-kan .form{border-radius:18px}
+.kan-steps{list-style:none;padding:0;margin:14px 0 0;display:grid;gap:6px;font-size:13px}.kan-steps li{background:rgba(255,255,255,.1);border:1px solid rgba(240,220,166,.35);border-radius:12px;padding:6px 10px}.kan-steps b{display:inline-block;min-width:58px;color:var(--yama);font-family:var(--maru)}
+body.tab-kan{background:#f4f2fb}.tab-kan .gnav a.on{background:#2a2d6e;border-color:#2a2d6e}
+/* 姓名診断：和紙と墨 */
+.hero-mei{background:#f7f0dc;color:var(--sumi);padding-bottom:24px}
+.hero-mei:before{background:radial-gradient(circle,rgba(201,165,92,.5) 0 1.2px,transparent 2px) 0 0/22px 22px;opacity:.5}
+.h1-mei{font-family:"Yuji Boku",var(--serif);font-weight:400;font-size:38px;line-height:1.25;margin:14px 0 2px;text-align:center}.h1-mei span{display:inline-block;font-family:var(--serif);font-weight:800;font-size:13px;background:var(--shu);color:#fff;padding:2px 8px;margin-right:8px;vertical-align:8px;letter-spacing:.1em}
+.sub-mei{text-align:center;font-size:12px;font-weight:700;margin:0 0 12px;color:#5b5048}
+.hero-mei .bubble{background:#fff}
+body.tab-mei{background:#fbf7ec}.tab-mei .gnav a.on{background:var(--sumi);border-color:var(--sumi)}
+/* 運命の一文字：色紙 */
+.shikishi{position:relative;max-width:260px;margin:6px auto 4px;aspect-ratio:136/121;background:radial-gradient(circle,rgba(201,165,92,.55) 0 1px,transparent 1.6px) 0 0/14px 14px,#fbf4e2;border:10px solid #2b2019;outline:1px solid var(--kin);outline-offset:3px;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 20px rgba(0,0,0,.18)}
+.shikishi .ichi{font-family:"Yuji Boku",var(--serif);font-size:104px;margin:0;line-height:1}.shikishi .rakkan{position:absolute;right:14px;bottom:12px;background:var(--shu);color:#fff;font-family:var(--serif);font-size:10px;font-weight:800;writing-mode:vertical-rl;padding:4px 2px}
+.gokaku{display:grid;gap:8px}.gokaku div{background:#fff;border-radius:14px;padding:10px 14px;box-shadow:0 3px 0 rgba(0,0,0,.05);display:grid;grid-template-columns:52px 1fr;align-items:center}.gokaku b{font-family:"Yuji Boku",var(--serif);font-weight:400;font-size:22px}.gokaku span{font-size:13px}
+@media(min-width:640px){.hero-sei .signs{grid-template-columns:repeat(6,1fr)}.axis{grid-template-columns:1fr 1fr}.juyo{grid-template-columns:320px 1fr;align-items:center}.khead{max-width:560px;margin:0 auto}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
