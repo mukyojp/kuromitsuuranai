@@ -35,8 +35,8 @@
   function renderFree() {
     const sg = st.sign, lp = D.lifepath[st.lp], ky = D.kyusei[st.ky];
     $('#free').innerHTML = `
-      <img src="img/cut/${sg}.png" alt="" style="display:block;width:170px;margin:0 auto 10px">
-      <p style="text-align:center;margin:0">${esc(st.name)}さんは</p>
+      <div class="kuro-say"><img src="img/cut/${sg}.png" alt="黒ねこの占い師くろみつ"><p>${esc(st.mei)}さん、はじめまして。<br>黒ねこの占い師、くろみつです。<br>あなたの生まれた日の星を読みました。</p></div>
+      <p style="text-align:center;margin:14px 0 0">${esc(st.name)}さんは</p>
       <h2 style="text-align:center;margin:4px 0 18px">${D.signs[sg]}・${esc(lp[0])}</h2>
       <div class="card"><h3>西洋占星術　太陽星座は${D.signs[sg]}</h3><p style="margin:0">2027年の${D.signs[sg]}の一文字は「${esc(D.kanji[sg])}」。<a href="signs/${sg}.html">2027年の運勢を読む</a></p></div>
       <div class="card"><h3>数秘術　ライフパス数 ${st.lp}「${esc(lp[0])}」</h3><p style="margin:0">${esc(lp[1])}</p></div>
@@ -92,20 +92,44 @@
     if (!pool.length) pool = D.ichimoji;
     const seed = [...(st.birth + code + st.ans.join(''))].reduce((a, c) => (a * 31 + c.charCodeAt(0)) >>> 0, 7);
     const ichi = pool[seed % pool.length]; st.ichimoji = ichi['漢字']; save();
+    const sg = st.sign, lp = D.lifepath[st.lp], ky = D.kyusei[st.ky];
+    const ax = ['A', 'B', 'C', 'D'].map((x) => D.axis_text[x][score(x) >= 0 ? 0 : 1]);
+    const call = esc(st.mei || st.name);
     $('#res').innerHTML = `
-      <img src="img/cut/${st.sign}.png" alt="" style="display:block;width:140px;margin:0 auto 8px">
-      <p style="text-align:center;margin:0">${esc(st.name)}さんの心のかたちは</p>
+      <div class="kuro-say"><img src="img/cut/base.png" alt="黒ねこの占い師くろみつ"><p>${call}さん、18の質問にこたえてくれてありがとう。<br>あなたの星と数字と、こたえを読みました。</p></div>
+      <p style="text-align:center;margin:18px 0 0">${call}さんの心のかたちは</p>
       <h2 style="text-align:center;margin:4px 0 4px">「${esc(tn)}」タイプ</h2>
       <p style="text-align:center;color:var(--muted);margin:0 0 18px">${esc(td)}</p>
-      <div class="card"><p style="margin:0">${tired ? 'このところ、まわりのためにがんばってきた時間が長かったようです。2027年は、そのがんばりを自分にも向けてあげる年。' : '今のあなたには、新しいことを受けとめる余白があります。2027年は、その余白に何を入れるかがテーマです。'}
-      ${change ? '心の中で、決めたいことがはっきりしてきていますね。くろみつは、その決断のタイミングを星から読みます。' : ''}</p></div>
-      <h2 style="margin-top:30px">あなたの運命の一文字</h2>
+      <div class="chapter"><p class="ch-no">鑑定書 第1章（無料）</p><h3>${call}さんという人</h3>
+      <p>${call}さんは、${D.signs[sg]}の太陽を持って生まれました。${esc(D.sign_trait[sg])}</p>
+      <p>数秘術で見ると、ライフパス数は「${st.lp}」。${esc(lp[0])}です。${esc(lp[1])}</p>
+      <p>そして九星気学の本命星は${esc(ky[0])}。${esc(ky[1])}</p>
+      <p>18のこたえからは、こんな${call}さんが見えてきました。${esc(ax[0])}${esc(ax[1])}</p>
+      <p>${esc(ax[2])}${esc(ax[3])}</p>
+      ${tired ? `<p>${esc(D.tired_text)}</p>` : ''}${change ? `<p>${esc(D.change_text)}</p>` : ''}
+      <p>星と数字とこたえ、3つが同じ方向を指しているところが、${call}さんの本当の強みです。2027年は、その強みがいちばん試され、いちばん報われる年になります。</p>
+      <div class="hit"><p>当たっていましたか？</p><button type="button" data-hit="1">当たってる！</button><button type="button" data-hit="0">ちょっと違うかも</button><p class="hit-msg" hidden></p></div></div>
+      <h2 style="margin-top:30px">${call}さんの運命の一文字</h2>
       <div class="card" style="text-align:center"><div class="ichi">${esc(ichi['漢字'])}</div><p style="margin:0">${esc(ichi['込める意味'])}。<br>「${esc(theme)}」を占ってほしいあなたを、そっと守る一文字です。</p>
-      <p class="fine" style="margin:10px 0 0">この一文字を、書家・夢香が筆で書き、ご加護の待ち受けや額装色紙にしてお届けできます。</p></div>
-      <h2 style="margin-top:30px">ここから先は、あなたの回答で書く鑑定書</h2>
-      <p class="lead">生年月日・お名前・${st.ans.length}の回答・「${esc(theme)}」をもとに、くろみつがあなただけの2027年を読み解きます。</p>
-      <div class="locked"><p>第1章　あなたという人／第2章　「${esc(tn)}」タイプのあなたが2027年に伸びる力／第3章　数字と九星が教えること／第4章　2027年の大きな流れ／第5章　「${esc(theme)}」がいちばん動く月……</p></div>`;
+      <p class="fine" style="margin:10px 0 0">この一文字を、書家・夢香が筆で書き、ご加護の待ち受けや色紙にしてお届けできます。</p></div>
+      <div class="chapter locked2"><p class="ch-no">鑑定書 第2章</p><h3>2027年、${call}さんの運気がいちばん動く月</h3>
+      <p>${call}さんの2027年でいちばん運気が動くのは、<span class="blur">◯月</span>です。この月、${call}さんの生まれた日の<span class="blur">◯◯と◯◯が重なり、「${esc(theme)}」に大きな流れがやってきます。</span></p>
+      <p class="blur">その前の月にしておきたい準備と、その月のすごし方、そして逆に、無理をしないほうがいい月についても、くろみつがくわしく読み解いています。</p>
+      <div class="unlock">続きは「2027年、あなたの運気が動く月」で読めます</div></div>
+      <div class="cmp"><h3>無料の星座占いと、何がちがうの？</h3><table>
+      <tr><th></th><th>無料の星座占い</th><th class="pay">990円の鑑定</th></tr>
+      <tr><td>だれの運勢？</td><td>${D.signs[sg]}の人みんな<br><small>（日本に約1,000万人）</small></td><td class="pay"><b>${call}さんだけ</b><br><small>生年月日・名前・18のこたえ</small></td></tr>
+      <tr><td>使う占術</td><td>西洋占星術（太陽）</td><td class="pay">西洋占星術・数秘術・九星気学</td></tr>
+      <tr><td>運気が動く月</td><td>星座全体の傾向</td><td class="pay"><b>${call}さんの月を名指し</b></td></tr>
+      <tr><td>あなたの悩み</td><td>—</td><td class="pay">「${esc(theme)}」に答える</td></tr></table></div>`;
   }
+
+  $('#res').addEventListener('click', (e) => {
+    const h = e.target.closest('[data-hit]'); if (!h) return;
+    const m = $('#res .hit-msg'); m.hidden = false;
+    m.textContent = h.dataset.hit === '1' ? 'よかった！ 第2章からは、あなたの2027年を月ごとに読んでいきます。' : '教えてくれてありがとう。くわしい鑑定では、生まれた時間やあなたの悩みまで読むので、もっと深くあなたに近づけます。';
+    st.hit = h.dataset.hit; save();
+  });
 
   if (st.sei && st.birth) { $('#sei').value = st.sei; $('#mei').value = st.mei || ''; $('#bd').value = st.birth; }
   const q = new URLSearchParams(location.search);
