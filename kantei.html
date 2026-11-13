@@ -55,7 +55,7 @@
 <script>(()=>{const v=localStorage.getItem('kuromitsu_plan');const s=document.getElementById('plan');if(v&&s)s.value=v;document.addEventListener('click',e=>{const a=e.target.closest('[data-plan]');if(a){localStorage.setItem('kuromitsu_plan',a.dataset.plan);if(s)s.value=a.dataset.plan;}});})();</script>
 <footer><div class="wrap"><p><a href="index.html">トップ</a><a href="shindan.html">本格鑑定</a><a href="seimei.html">姓名診断</a><a href="kantei.html">鑑定の料金</a><a href="legal.html">特定商取引法に基づく表記</a><a href="privacy.html">プライバシーポリシー</a></p>
 <p class="fine" style="color:#a8988a">占いの結果は、毎日を前向きに過ごすためのヒントです。効果や結果を保証するものではありません。鑑定書は、西洋占星術・数秘術・九星気学の知識と天文計算をもとに作成し（文章の作成にAIを使用）、くろみつの言葉でお届けしています。運営：むきょう合同会社</p><p>© 2026 くろみつ占い</p></div></footer>
-<div class="stick"><div class="wrap"><a class="s1" href="index.html#signs">星座から占う<small>12星座の運勢・無料</small></a><a class="s2" href="shindan.html">あなただけを占う<small>本格鑑定・第1章は無料</small></a></div></div>
+<div class="stick"><div class="wrap"><a class="s1" href="index.html#signs">星座から占う<small>12星座の運勢・無料</small></a><a class="s2" href="shindan.html">18の質問で、私を占う<small>本格鑑定・3分・第1章は無料</small></a></div></div>
 <script>
 function signOf(m,d){const t=[[1,20,'aquarius'],[2,19,'pisces'],[3,21,'aries'],[4,20,'taurus'],[5,21,'gemini'],[6,22,'cancer'],[7,23,'leo'],[8,23,'virgo'],[9,23,'libra'],[10,24,'scorpio'],[11,23,'sagittarius'],[12,22,'capricorn']];let s='capricorn';for(const[mm,dd,n]of t){if(m>mm||(m==mm&&d>=dd))s=n}return s}
 document.querySelectorAll('form[data-diagnose]').forEach(f=>f.addEventListener('submit',e=>{e.preventDefault();const m=+f.m.value,d=+f.d.value;if(!m||!d)return;location.href='signs/'+signOf(m,d)+'.html#result'}));

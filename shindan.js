@@ -35,8 +35,10 @@
     const name = sei + ' ' + mei;
     const [y, m, d] = b.split('-').map(Number);
     Object.assign(st, { name, sei, mei, birth: b, sign: signOf(y, m, d), lp: lifePath(y, m, d), ky: kyusei(y, m, d) });
-    save(); renderFree(); show('#s2');
+    st.direct = !quick; save(); renderFree();
+    if (quick) { show('#s2'); } else { st.ans = []; st.qi = 0; save(); renderQ(); show('#s3'); }
   });
+  let quick = false; // トップの入力欄から来たときは、先に無料の結果を見せる
   // 名前の画数（姓名診断と同じ数え方。わからない字があれば null）
   function nameKaku(sei, mei) {
     const st_ = D.strokes || {}, get = (c) => st_[c] || 0;
@@ -93,7 +95,7 @@
       <button class="btn" id="go3" style="margin-top:20px">結果を見る</button>`;
     $('#go3').onclick = () => {
       st.themes = [...document.querySelectorAll('.themes input:checked')].map((x) => x.value);
-      st.worry = $('#worry').value.trim(); st.time = $('#btime').value; save(); renderResult(); show('#s4');
+      st.worry = $('#worry').value.trim(); st.time = $('#btime').value; save(); renderResult(); $('#free4').innerHTML = st.direct ? $('#free').innerHTML.replace(/<div class="free-hook">[\s\S]*$/, '') : ''; show('#s4');
     };
   }
   $('#qbox').addEventListener('click', (e) => {
@@ -177,5 +179,5 @@
   if (q.get('b')) $('#bd').value = q.get('b');
   if (q.get('sei')) $('#sei').value = q.get('sei');
   if (q.get('mei')) $('#mei').value = q.get('mei');
-  if (q.get('sei') && q.get('mei') && q.get('b')) $('#f1').requestSubmit();
+  if (q.get('sei') && q.get('mei') && q.get('b')) { quick = true; $('#f1').requestSubmit(); }
 })();
