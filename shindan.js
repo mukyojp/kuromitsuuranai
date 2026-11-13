@@ -25,21 +25,23 @@
   // ---- step 1: 無料の結果 ----
   $('#f1').addEventListener('submit', (e) => {
     e.preventDefault();
-    const name = $('#nm').value.trim(), b = $('#bd').value;
-    if (!name || !b) return;
+    const sei = $('#sei').value.trim(), mei = $('#mei').value.trim(), b = $('#bd').value;
+    if (!sei || !mei || !b) return;
+    const name = sei + ' ' + mei;
     const [y, m, d] = b.split('-').map(Number);
-    Object.assign(st, { name, birth: b, sign: signOf(m, d), lp: lifePath(y, m, d), ky: kyusei(y, m, d) });
+    Object.assign(st, { name, sei, mei, birth: b, sign: signOf(m, d), lp: lifePath(y, m, d), ky: kyusei(y, m, d) });
     save(); renderFree(); show('#s2');
   });
   function renderFree() {
     const sg = st.sign, lp = D.lifepath[st.lp], ky = D.kyusei[st.ky];
     $('#free').innerHTML = `
-      <img src="img/${sg}.jpg" alt="" style="display:block;width:200px;margin:0 auto 10px;border-radius:16px">
+      <img src="img/cut/${sg}.png" alt="" style="display:block;width:170px;margin:0 auto 10px">
       <p style="text-align:center;margin:0">${esc(st.name)}さんは</p>
       <h2 style="text-align:center;margin:4px 0 18px">${D.signs[sg]}・${esc(lp[0])}</h2>
       <div class="card"><h3>西洋占星術　太陽星座は${D.signs[sg]}</h3><p style="margin:0">2027年の${D.signs[sg]}の一文字は「${esc(D.kanji[sg])}」。<a href="signs/${sg}.html">2027年の運勢を読む</a></p></div>
       <div class="card"><h3>数秘術　ライフパス数 ${st.lp}「${esc(lp[0])}」</h3><p style="margin:0">${esc(lp[1])}</p></div>
-      <div class="card"><h3>九星気学　本命星は${esc(ky[0])}</h3><p style="margin:0">${esc(ky[1])}</p></div>`;
+      <div class="card"><h3>九星気学　本命星は${esc(ky[0])}</h3><p style="margin:0">${esc(ky[1])}</p></div>
+      <div class="card"><h3>姓名判断　「${esc(st.sei)} ${esc(st.mei)}」の画数</h3><p style="margin:0">お名前の画数が持つ力も、無料で読めます。<a href="seimei.html?sei=${encodeURIComponent(st.sei)}&mei=${encodeURIComponent(st.mei)}">名前の画数を見る</a></p></div>`;
   }
   $('#go2').addEventListener('click', () => { st.ans = []; st.qi = 0; save(); renderQ(); show('#s3'); });
 
@@ -91,7 +93,7 @@
     const seed = [...(st.birth + code + st.ans.join(''))].reduce((a, c) => (a * 31 + c.charCodeAt(0)) >>> 0, 7);
     const ichi = pool[seed % pool.length]; st.ichimoji = ichi['漢字']; save();
     $('#res').innerHTML = `
-      <img src="img/${st.sign}.jpg" alt="" style="display:block;width:160px;margin:0 auto 8px;border-radius:16px">
+      <img src="img/cut/${st.sign}.png" alt="" style="display:block;width:140px;margin:0 auto 8px">
       <p style="text-align:center;margin:0">${esc(st.name)}さんの心のかたちは</p>
       <h2 style="text-align:center;margin:4px 0 4px">「${esc(tn)}」タイプ</h2>
       <p style="text-align:center;color:var(--muted);margin:0 0 18px">${esc(td)}</p>
@@ -105,9 +107,10 @@
       <div class="locked"><p>第1章　あなたという人／第2章　「${esc(tn)}」タイプのあなたが2027年に伸びる力／第3章　数字と九星が教えること／第4章　2027年の大きな流れ／第5章　「${esc(theme)}」がいちばん動く月……</p></div>`;
   }
 
-  if (st.name && st.birth) { $('#nm').value = st.name; $('#bd').value = st.birth; }
+  if (st.sei && st.birth) { $('#sei').value = st.sei; $('#mei').value = st.mei || ''; $('#bd').value = st.birth; }
   const q = new URLSearchParams(location.search);
   if (q.get('b')) $('#bd').value = q.get('b');
-  if (q.get('n')) $('#nm').value = q.get('n');
-  if (q.get('n') && q.get('b')) $('#f1').requestSubmit();
+  if (q.get('sei')) $('#sei').value = q.get('sei');
+  if (q.get('mei')) $('#mei').value = q.get('mei');
+  if (q.get('sei') && q.get('mei') && q.get('b')) $('#f1').requestSubmit();
 })();

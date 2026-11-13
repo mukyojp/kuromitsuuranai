@@ -46,4 +46,6 @@
       <p class="fine" style="margin-top:12px">画数は新字体で数えています。旧字体や流派によって画数・読み方が変わることがあります。名前の良し悪しを決めるものではなく、あなたの名前が持つ力を知るための読みものです。</p>`;
     $('#res').hidden = false; $('#res').scrollIntoView({ behavior: 'smooth' });
   });
+  const q = new URLSearchParams(location.search);
+  if (q.get('sei') && q.get('mei')) { document.getElementById('sei').value = q.get('sei'); document.getElementById('mei').value = q.get('mei'); document.getElementById('fs').requestSubmit(); }
 })();

@@ -1,0 +1,3 @@
+User-agent: *
+Disallow: /mochi/
+Sitemap: https://kuromitsuuranai.jp/sitemap.xml
