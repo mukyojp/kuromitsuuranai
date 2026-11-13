@@ -6,9 +6,14 @@
   const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   const show = (id) => { ['#s1', '#s2', '#s3', '#s4'].forEach((x) => ($(x).hidden = x !== id)); scrollTo(0, 0); };
 
-  function signOf(m, d) {
-    const t = [[1, 20, 'aquarius'], [2, 19, 'pisces'], [3, 21, 'aries'], [4, 20, 'taurus'], [5, 21, 'gemini'], [6, 22, 'cancer'], [7, 23, 'leo'], [8, 23, 'virgo'], [9, 23, 'libra'], [10, 24, 'scorpio'], [11, 23, 'sagittarius'], [12, 22, 'capricorn']];
-    let s = 'capricorn'; for (const [mm, dd, n] of t) if (m > mm || (m === mm && d >= dd)) s = n; return s;
+  const ORDER = ['aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo', 'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces'];
+  function signOf(y, m, d) {
+    // 天文計算の表（その年の各星座のはじまりの日）で判定。表の外の年は平均的な境目で判定
+    const t = (D.cal && D.cal.sign[y]) || [321, 420, 521, 622, 723, 823, 923, 1024, 1123, 1222, 120, 219];
+    const md = m * 100 + d;
+    let best = 'capricorn', bestStart = -1;
+    t.forEach((start, i) => { if (start <= md && start > bestStart) { bestStart = start; best = ORDER[i]; } });
+    return best;
   }
   function lifePath(y, m, d) {
     let n = String(y) + String(m).padStart(2, '0') + String(d).padStart(2, '0');
@@ -18,7 +23,7 @@
   }
   function kyusei(y, m, d) {
     // 立春（2月4日ごろ）より前の生まれは前の年として数える
-    const yy = (m < 2 || (m === 2 && d < 4)) ? y - 1 : y;
+    const rs = (D.cal && D.cal.risshun[y]) || 204; const yy = (m * 100 + d < rs) ? y - 1 : y;
     const r = (11 - (yy % 9)) % 9; return r === 0 ? 9 : r;
   }
 
@@ -29,7 +34,7 @@
     if (!sei || !mei || !b) return;
     const name = sei + ' ' + mei;
     const [y, m, d] = b.split('-').map(Number);
-    Object.assign(st, { name, sei, mei, birth: b, sign: signOf(m, d), lp: lifePath(y, m, d), ky: kyusei(y, m, d) });
+    Object.assign(st, { name, sei, mei, birth: b, sign: signOf(y, m, d), lp: lifePath(y, m, d), ky: kyusei(y, m, d) });
     save(); renderFree(); show('#s2');
   });
   function renderFree() {
@@ -60,7 +65,7 @@
     $('#qbox').innerHTML = `
       <div class="bar"><i style="width:100%"></i></div>
       <h2 style="margin:22px 0 10px">いちばん占ってほしいことは？</h2><p class="fine" style="margin:0 0 12px">いくつでも選べます</p>
-      <div class="themes">${D.themes.map((t) => `<label class="chipbox"><input type="checkbox" value="${esc(t)}"> ${esc(t)}</label>`).join('')}</div>
+      <div class="themes">${D.themes.map((t) => `<label class="chipbox"><input type="checkbox" value="${esc(t)}"${st.preTheme === t ? ' checked' : ''}> ${esc(t)}</label>`).join('')}</div>
       <h2 style="margin:24px 0 10px">今、気になっていること</h2>
       <textarea id="worry" placeholder="例：転職するか迷っています／来年こそ恋人がほしい（書かなくても大丈夫）"></textarea>
       <label class="fine" style="display:block;margin-top:14px">生まれた時間（わかれば。鑑定がくわしくなります）</label><input type="time" id="btime">
@@ -112,14 +117,21 @@
       <h2 style="margin-top:30px">${call}さんの運命の一文字</h2>
       <div class="card" style="text-align:center"><div class="ichi">${esc(ichi['漢字'])}</div><p style="margin:0">${esc(ichi['込める意味'])}。<br>「${esc(theme)}」を占ってほしいあなたを、そっと守る一文字です。</p>
       <p class="fine" style="margin:10px 0 0">この一文字を、書家・夢香が筆で書き、ご加護の待ち受けや色紙にしてお届けできます。</p></div>
-      <div class="chapter locked2"><p class="ch-no">鑑定書 第2章</p><h3>2027年、${call}さんの運気がいちばん動く月</h3>
-      <p>${call}さんの2027年でいちばん運気が動くのは、<span class="blur">◯月</span>です。この月、${call}さんの生まれた日の<span class="blur">◯◯と◯◯が重なり、「${esc(theme)}」に大きな流れがやってきます。</span></p>
-      <p class="blur">その前の月にしておきたい準備と、その月のすごし方、そして逆に、無理をしないほうがいい月についても、くろみつがくわしく読み解いています。</p>
-      <div class="unlock">続きは「2027年、あなたの運気が動く月」で読めます</div></div>
+      <div class="toc"><p class="toc-h">ここから本題。${call}さんの2027年を読みます</p>
+      <div class="ch"><b>第2章　2027年、運気がいちばん動く月</b><p>${call}さんの2027年でいちばん運気が動くのは、<span class="fuse">〇月</span>です。その月、生まれた日の星に……</p></div>
+      <div class="ch"><b>第3章　その前の月にしておくとよい準備</b><p>大きな流れが来る前に、${call}さんがひとつだけ整えておきたいのは……</p></div>
+      <div class="ch"><b>第4章　追い風の3か月と、ひと休みしてよい月</b><p>追い風が吹くのは <span class="fuse">〇月・〇月・〇月</span>。反対に、無理をしなくていいのは <span class="fuse">〇月</span>……</p></div>
+      <div class="ch"><b>第5章　1月〜12月、ひと月ひと言の運気カレンダー</b><p>1月は「<span class="fuse">〇〇〇〇</span>」、2月は「<span class="fuse">〇〇〇〇</span>」……</p></div>
+      <div class="ch"><b>第6章　「${esc(theme)}」が動くのは何月？</b><p>${call}さんが占ってほしいと選んだ「${esc(theme)}」。星の配置から見ると……</p></div>
+      ${st.worry ? `<div class="ch"><b>第6章より　「${esc(st.worry.slice(0, 24))}${st.worry.length > 24 ? '…' : ''}」へのこたえ</b><p>${call}さんが書いてくれたこと、ちゃんと読みました。くろみつの答えは……</p></div>` : ''}
+      <div class="ch last"><b>第7章　${call}さんを守る一文字「${esc(ichi['漢字'])}」と、今年のお守りことば</b><p>……</p></div></div>
+      <div class="buy"><p class="buy-h">${call}さんの「〇月」を、今すぐ読む</p>
+      <a class="btn" href="kantei.html#order" data-plan="otameshi">私の「〇月」を読む（990円）<small>上の第2章〜第7章まで、${call}さんの名前入りの鑑定書（PDF）で</small></a>
+      <p class="buy-note">1回990円（税込）・<b>月額ではありません</b>・はじめての方限定<br>ご注文から3日以内にメールでお届け</p></div>
       <div class="cmp"><h3>無料の星座占いと、何がちがうの？</h3><table>
-      <tr><th></th><th>無料の星座占い</th><th class="pay">990円の鑑定</th></tr>
-      <tr><td>だれの運勢？</td><td>${D.signs[sg]}の人みんな<br><small>（日本に約1,000万人）</small></td><td class="pay"><b>${call}さんだけ</b><br><small>生年月日・名前・18のこたえ</small></td></tr>
-      <tr><td>使う占術</td><td>西洋占星術（太陽）</td><td class="pay">西洋占星術・数秘術・九星気学</td></tr>
+      <tr><th></th><th>無料の星座占い</th><th class="pay">990円の鑑定書</th></tr>
+      <tr><td>だれの運勢？</td><td>${D.signs[sg]}の人みんな</td><td class="pay"><b>${call}さんだけ</b><br><small>生年月日・フルネーム・18のこたえ</small></td></tr>
+      <tr><td>使う占術</td><td>西洋占星術（太陽星座）</td><td class="pay">西洋占星術・数秘術・九星気学</td></tr>
       <tr><td>運気が動く月</td><td>星座全体の傾向</td><td class="pay"><b>${call}さんの月を名指し</b></td></tr>
       <tr><td>あなたの悩み</td><td>—</td><td class="pay">「${esc(theme)}」に答える</td></tr></table></div>`;
   }
@@ -127,12 +139,15 @@
   $('#res').addEventListener('click', (e) => {
     const h = e.target.closest('[data-hit]'); if (!h) return;
     const m = $('#res .hit-msg'); m.hidden = false;
-    m.textContent = h.dataset.hit === '1' ? 'よかった！ 第2章からは、あなたの2027年を月ごとに読んでいきます。' : '教えてくれてありがとう。くわしい鑑定では、生まれた時間やあなたの悩みまで読むので、もっと深くあなたに近づけます。';
+    m.textContent = h.dataset.hit === '1' ? 'よかった。それでは、ここから本題。あなたの2027年を読んでいきますね。' : '教えてくれてありがとう。くわしい鑑定では、生まれた時間やあなたの悩みまで読むので、もっと深くあなたに近づけます。';
     st.hit = h.dataset.hit; save();
   });
 
+  document.addEventListener('click', (e) => { const a = e.target.closest('[data-plan]'); if (a) localStorage.setItem('kuromitsu_plan', a.dataset.plan); });
+
   if (st.sei && st.birth) { $('#sei').value = st.sei; $('#mei').value = st.mei || ''; $('#bd').value = st.birth; }
   const q = new URLSearchParams(location.search);
+  if (q.get('t')) { st.preTheme = q.get('t'); save(); const h = $('#theme-hint'); if (h) { h.hidden = false; h.textContent = '占うテーマ：' + q.get('t'); } }
   if (q.get('b')) $('#bd').value = q.get('b');
   if (q.get('sei')) $('#sei').value = q.get('sei');
   if (q.get('mei')) $('#mei').value = q.get('mei');
