@@ -37,16 +37,37 @@
     Object.assign(st, { name, sei, mei, birth: b, sign: signOf(y, m, d), lp: lifePath(y, m, d), ky: kyusei(y, m, d) });
     save(); renderFree(); show('#s2');
   });
+  // 名前の画数（姓名診断と同じ数え方。わからない字があれば null）
+  function nameKaku(sei, mei) {
+    const st_ = D.strokes || {}, get = (c) => st_[c] || 0;
+    const a = [...sei].map(get), b = [...mei].map(get);
+    if (!a.length || !b.length || [...a, ...b].some((x) => !x)) return null;
+    const sum = (x) => x.reduce((p, q) => p + q, 0);
+    return { jin: a[a.length - 1] + b[0], so: sum(a) + sum(b) };
+  }
+  const nkw = (n) => (D.name_kw ? D.name_kw[String(((n - 1) % 80) + 1)] : '');
   function renderFree() {
-    const sg = st.sign, lp = D.lifepath[st.lp], ky = D.kyusei[st.ky];
+    const sg = st.sign, lp = D.lifepath[st.lp], ky = D.kyusei[st.ky], C = D.ch1 || {};
+    const call = esc(st.mei);
+    const sKw = D.sign_kw[sg] || [], lKw = D.lp_kw[String(st.lp)] || [], kk = nameKaku(st.sei, st.mei);
+    const chips = [...sKw.slice(0, 3), ...lKw, kk ? nkw(kk.jin) : ''].filter(Boolean);
+    const signText = (C.sign && C.sign[sg] && C.sign[sg].surface) ? C.sign[sg].surface.replace(/\{name\}/g, st.mei) : D.sign_trait[sg];
+    const lpText = (C.lifepath && C.lifepath[String(st.lp)]) ? C.lifepath[String(st.lp)].replace(/\{name\}/g, st.mei) : lp[1];
+    const kyText = (C.kyusei && C.kyusei[String(st.ky)]) ? C.kyusei[String(st.ky)].replace(/\{name\}/g, st.mei) : ky[1];
+    const best = (D.best[sg] || []).map((m) => m + '月').join('と');
+    const catchS = (C.sign_catch && C.sign_catch[sg]) ? C.sign_catch[sg][0] : '';
     $('#free').innerHTML = `
-      <div class="kuro-say"><img src="img/cut/${sg}.png" alt="黒ねこの占い師くろみつ"><p>${esc(st.mei)}さん、はじめまして。<br>黒ねこの占い師、くろみつです。<br>あなたの生まれた日の星を読みました。</p></div>
-      <p style="text-align:center;margin:14px 0 0">${esc(st.name)}さんは</p>
-      <h2 style="text-align:center;margin:4px 0 18px">${D.signs[sg]}・${esc(lp[0])}</h2>
-      <div class="card"><h3>西洋占星術　太陽星座は${D.signs[sg]}</h3><p style="margin:0">2027年の${D.signs[sg]}の一文字は「${esc(D.kanji[sg])}」。<a href="signs/${sg}.html">2027年の運勢を読む</a></p></div>
-      <div class="card"><h3>数秘術　ライフパス数 ${st.lp}「${esc(lp[0])}」</h3><p style="margin:0">${esc(lp[1])}</p></div>
-      <div class="card"><h3>九星気学　本命星は${esc(ky[0])}</h3><p style="margin:0">${esc(ky[1])}</p></div>
-      <div class="card"><h3>姓名判断　「${esc(st.sei)} ${esc(st.mei)}」の画数</h3><p style="margin:0">お名前の画数が持つ力も、無料で読めます。<a href="seimei.html?sei=${encodeURIComponent(st.sei)}&mei=${encodeURIComponent(st.mei)}">名前の画数を見る</a></p></div>`;
+      <div class="kuro-say"><img src="img/cut/${sg}.png" alt="黒ねこの占い師くろみつ"><p>${call}さん、はじめまして。黒ねこの占い師、くろみつです。<br>あなたが生まれた日の空と、数字と、お名前を読みました。</p></div>
+      <div class="free-top"><p class="ft-k">${esc(st.name)}さんは</p><h2>${D.signs[sg]} × ${esc(lp[0])} × ${esc(ky[0])}</h2>
+      <p class="ft-l">あなたをあらわすことば</p><div class="chips">${chips.map((c) => `<span>${esc(c)}</span>`).join('')}</div></div>
+      <div class="rcard r-sei"><p class="rc-t"><span>西洋占星術</span>太陽星座　${D.signs[sg]}</p><p>${esc(signText)}</p>
+      <div class="rc-y"><b>2027年の${D.signs[sg]}</b>　一文字は「${esc(D.kanji[sg])}」${catchS ? '　' + esc(catchS) : ''}<br>星座全体で運気が高まるのは <b>${best}</b>。<a href="signs/${sg}.html">月別の運勢を見る</a></div></div>
+      <div class="rcard r-lp"><p class="rc-t"><span>数秘術</span>ライフパス数　${st.lp}「${esc(lp[0])}」</p><p>${esc(lpText)}</p></div>
+      <div class="rcard r-ky"><p class="rc-t"><span>九星気学</span>本命星　${esc(ky[0])}</p><p>${esc(kyText)}</p></div>
+      <div class="rcard r-mei"><p class="rc-t"><span>姓名判断</span>「${esc(st.sei)} ${esc(st.mei)}」</p>${kk ? `<p>名前の中心にある人格は <b>${kk.jin}画「${esc(nkw(kk.jin))}」</b>、人生全体をあらわす総格は <b>${kk.so}画「${esc(nkw(kk.so))}」</b>。名前の画数にも、${call}さんらしさが表れています。</p>` : '<p>お名前の画数は、姓名診断でくわしく読めます。</p>'}<a href="seimei.html?sei=${encodeURIComponent(st.sei)}&mei=${encodeURIComponent(st.mei)}">五つの画数を全部見る</a></div>
+      <div class="free-hook"><p>ここまでが、${call}さんが生まれ持った<b>「地図」</b>です。</p>
+      <p>でも、今の${call}さんがどこにいて、何をがんばっていて、何に迷っているのか。それは生年月日だけでは読めません。</p>
+      <p>星座全体の高まりは${best}。けれど、${call}さんの星と数字と、今の心で見ると、いちばん運気が動く月は、それとは別の月かもしれません。</p></div>`;
   }
   $('#go2').addEventListener('click', () => { st.ans = []; st.qi = 0; save(); renderQ(); show('#s3'); });
 
@@ -85,6 +106,22 @@
   function score(axis) {
     return D.questions.reduce((a, q, i) => a + (q.axis === axis ? (q.rev ? -1 : 1) * (st.ans[i] || 0) : 0), 0);
   }
+  // 第1章：ch1_texts.json の部品を、しいたけ占いに学んだ順番で並べる（部品がなければ旧版の短い文）
+  function ch1Html(call, sg, theme, tired, change, code, ax, lp, ky, tn) {
+    const C = D.ch1, fill = (x) => esc(x || '').replace(/\{name\}/g, call);
+    if (!C || !C.sign || !C.sign[sg]) {
+      return `<p>${call}さんは、${D.signs[sg]}の太陽を持って生まれました。${esc(D.sign_trait[sg])}</p>
+      <p>数秘術で見ると、ライフパス数は「${st.lp}」。${esc(lp[0])}です。${esc(lp[1])}</p>
+      <p>そして九星気学の本命星は${esc(ky[0])}。${esc(ky[1])}</p>
+      <p>18のこたえからは、こんな${call}さんが見えてきました。${esc(ax[0])}${esc(ax[1])}${esc(ax[2])}${esc(ax[3])}</p>`;
+    }
+    const S = C.sign[sg], mood = tired ? C.tired : (change ? C.change : C.steady);
+    const parts = [
+      ['', C.opening], [`${D.signs[sg]}の、もうひとつの顔`, S.inner],
+      [`18のこたえが見せた「${tn}」の心`, C.type[code]], ['', mood], ['', S.hurt], ['', S.gift],
+      [`「${theme}」を選んだあなたへ`, (C.theme && (C.theme[theme] || C.theme['2027年の全体の流れ']))]];
+    return parts.filter((x) => x[1]).map(([h, b]) => (h ? `<p class="ch-sub">${esc(h)}</p>` : '') + `<p>${fill(b)}</p>`).join('');
+  }
   function renderResult() {
     const code = ['A', 'B', 'C', 'D'].map((x) => (score(x) >= 0 ? x : x.toLowerCase())).join('');
     const [tn, td] = D.types[code];
@@ -106,18 +143,12 @@
       <h2 style="text-align:center;margin:4px 0 4px">「${esc(tn)}」タイプ</h2>
       <p style="text-align:center;color:var(--muted);margin:0 0 18px">${esc(td)}</p>
       <div class="chapter"><p class="ch-no">鑑定書 第1章（無料）</p><h3>${call}さんという人</h3>
-      <p>${call}さんは、${D.signs[sg]}の太陽を持って生まれました。${esc(D.sign_trait[sg])}</p>
-      <p>数秘術で見ると、ライフパス数は「${st.lp}」。${esc(lp[0])}です。${esc(lp[1])}</p>
-      <p>そして九星気学の本命星は${esc(ky[0])}。${esc(ky[1])}</p>
-      <p>18のこたえからは、こんな${call}さんが見えてきました。${esc(ax[0])}${esc(ax[1])}</p>
-      <p>${esc(ax[2])}${esc(ax[3])}</p>
-      ${tired ? `<p>${esc(D.tired_text)}</p>` : ''}${change ? `<p>${esc(D.change_text)}</p>` : ''}
-      <p>星と数字とこたえ、3つが同じ方向を指しているところが、${call}さんの本当の強みです。2027年は、その強みがいちばん試され、いちばん報われる年になります。</p>
-      <div class="hit"><p>当たっていましたか？</p><button type="button" data-hit="1">当たってる！</button><button type="button" data-hit="0">ちょっと違うかも</button><p class="hit-msg" hidden></p></div></div>
+      ${ch1Html(call, sg, theme, tired, change, code, ax, lp, ky, tn)}
+      </div>
       <h2 style="margin-top:30px">${call}さんの運命の一文字</h2>
       <div class="card" style="text-align:center"><div class="shikishi"><div class="ichi">${esc(ichi['漢字'])}</div><span class="rakkan">くろみつ</span></div><p class="fine" style="margin:0 0 8px">※画面の文字は書体です。お申し込み後、書家・夢香が筆で書きます。</p><p style="margin:0">${esc(ichi['込める意味'])}。<br>「${esc(theme)}」を占ってほしいあなたを、そっと守る一文字です。</p>
-      <p class="fine" style="margin:10px 0 0">この一文字を、書家・夢香が筆で書き、ご加護の待ち受けや色紙にしてお届けできます。</p></div>
-      <div class="toc"><p class="toc-h">ここから本題。${call}さんの2027年を読みます</p>
+      <p class="fine" style="margin:10px 0 0">この一文字は、書家・夢香があなたのために筆で書くこともできます（下でご案内します）。</p></div>
+      <div class="toc"><p class="toc-h">ここからは、${call}さんの2027年のお話です</p>
       <div class="ch"><b>第2章　2027年、運気がいちばん動く月</b><p>${call}さんの2027年でいちばん運気が動くのは、<span class="fuse">〇月</span>です。その月、生まれた日の星に……</p></div>
       <div class="ch"><b>第3章　その前の月にしておくとよい準備</b><p>大きな流れが来る前に、${call}さんがひとつだけ整えておきたいのは……</p></div>
       <div class="ch"><b>第4章　追い風の3か月と、ひと休みしてよい月</b><p>追い風が吹くのは <span class="fuse">〇月・〇月・〇月</span>。反対に、無理をしなくていいのは <span class="fuse">〇月</span>……</p></div>
@@ -133,15 +164,10 @@
       <tr><td>だれの運勢？</td><td>${D.signs[sg]}の人みんな</td><td class="pay"><b>${call}さんだけ</b><br><small>生年月日・フルネーム・18のこたえ</small></td></tr>
       <tr><td>使う占術</td><td>西洋占星術（太陽星座）</td><td class="pay">西洋占星術・数秘術・九星気学</td></tr>
       <tr><td>運気が動く月</td><td>星座全体の傾向</td><td class="pay"><b>${call}さんの月を名指し</b></td></tr>
-      <tr><td>あなたの悩み</td><td>—</td><td class="pay">「${esc(theme)}」に答える</td></tr></table></div>`;
+      <tr><td>あなたの悩み</td><td>—</td><td class="pay">「${esc(theme)}」に答える</td></tr></table></div>
+      <div class="prem yw-wrap">${D.yume_html}</div>`;
   }
 
-  $('#res').addEventListener('click', (e) => {
-    const h = e.target.closest('[data-hit]'); if (!h) return;
-    const m = $('#res .hit-msg'); m.hidden = false;
-    m.textContent = h.dataset.hit === '1' ? 'よかった。それでは、ここから本題。あなたの2027年を読んでいきますね。' : '教えてくれてありがとう。くわしい鑑定では、生まれた時間やあなたの悩みまで読むので、もっと深くあなたに近づけます。';
-    st.hit = h.dataset.hit; save();
-  });
 
   document.addEventListener('click', (e) => { const a = e.target.closest('[data-plan]'); if (a) localStorage.setItem('kuromitsu_plan', a.dataset.plan); });
 

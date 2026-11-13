@@ -48,12 +48,10 @@
       <div class="kakuzu">${[...sei, ...mei].map((c, i) => `<span class="${i < sei.length ? 'ks' : 'km'}"><b>${esc(c)}</b><small>${strokes(c, manual)}画</small></span>`).join('')}</div>
       <p style="text-align:center;margin:10px 0 18px">${who === 'self' ? 'あなた' : 'この名前'}のいちばんの力は<br><strong style="font-size:26px;font-family:var(--maru)">「${esc(kw(jin))}」</strong><br><small style="color:var(--muted)">人格 ${jin}画（名前の中心にある力）</small></p>
       <div class="kakus">${rows.map(([k, n]) => `<div class="card"><h3 style="margin:0 0 4px">${k}　${n}画「${esc(kw(n))}」</h3><p class="fine" style="margin:0">${esc(S.kaku[k])}</p></div>`).join('')}</div>
-      ${who === 'baby' ? '' : `<div class="hit"><p>当たっていましたか？</p><button type="button" data-hit="1">当たってる！</button><button type="button" data-hit="0">ちょっと違うかも</button><p class="hit-msg" hidden></p></div>`}
       <div class="share"><p>結果をシェアする（名前は入りません）</p><a target="_blank" rel="noopener" href="https://twitter.com/intent/tweet?text=${encodeURIComponent('くろみつ占いの姓名診断、わたしの名前のいちばんの力は「' + kw(jin) + '」だった #くろみつ占い')}&url=${encodeURIComponent('https://kuromitsuuranai.jp/seimei.html')}">Xでシェア</a><a target="_blank" rel="noopener" href="https://social-plugins.line.me/lineit/share?url=${encodeURIComponent('https://kuromitsuuranai.jp/seimei.html')}">LINEで送る</a></div>
       ${who === 'self' ? `<div class="cta"><h3>${call}の名前と生年月日で、<br>2027年も読んでみませんか？</h3><p style="margin:0 0 6px">名前の画数に、星・数字・九星を合わせて、くろみつが鑑定書の第1章を無料で書きます。</p><a class="btn yama" href="shindan.html?sei=${encodeURIComponent(sei.join(''))}&mei=${encodeURIComponent(mei.join(''))}">名前はそのまま、生年月日を入れて読む<small>無料・3分</small></a></div>` : ''}
       <p class="fine" style="margin-top:12px">画数は新字体で数えています。旧字体や流派によって画数・読み方が変わることがあります。名前の良し悪しを決めるものではなく、名前が持つ力を知るための読みものです。</p>`;
     document.querySelectorAll('.seimei-plan').forEach((x) => { x.hidden = !(x.dataset.who.split(' ').includes(who)); });
-    $('#out').onclick = (e) => { const h = e.target.closest('[data-hit]'); if (!h) return; const m = $('#out .hit-msg'); m.hidden = false; m.textContent = h.dataset.hit === '1' ? 'よかった。名前は、生まれて最初にもらう贈りもの。その力を、毎日そばに置いてみませんか。' : '教えてくれてありがとう。画数は名前の力のひとつの見方です。生年月日の星と合わせると、もっとあなたに近づけます。'; };
     $('#res').hidden = false; $('#res').scrollIntoView({ behavior: 'smooth' });
   });
   const q = new URLSearchParams(location.search);

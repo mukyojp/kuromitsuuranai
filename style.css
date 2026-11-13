@@ -157,6 +157,26 @@ ol.wakaru{margin:6px 0 10px;padding:0;list-style:none;counter-reset:w;font-size:
 .card h3+p{margin-top:0}
 
 [hidden]{display:none!important}
+.bubble-up{margin:10px 0 0!important;font-size:14px!important}.bubble-up:before{left:auto!important;right:52px;top:-8px!important;border:8px solid transparent!important;border-bottom-color:#fff!important;border-top:0!important}
+.hero-top{align-items:end}.hero .hero-kuro img{width:120px}
+.sec-menu{padding:18px 0}.menu3b{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.menu3b a{display:flex;flex-direction:column;align-items:center;text-align:center;text-decoration:none;border-radius:18px;padding:8px 4px 10px;box-shadow:0 4px 0 rgba(0,0,0,.1)}.menu3b img{width:62px;height:62px;object-fit:contain}.menu3b b{font-family:var(--maru);font-weight:900;font-size:16px}.menu3b span{font-size:10.5px;line-height:1.4;margin-top:2px}
+.m-sei{background:var(--sora);color:#fff}.m-kan{background:#1f2257;color:#fff}.m-kan b{color:var(--yama)}.m-mei{background:#f7f0dc;color:var(--sumi);border:1px solid #e7d6ae}.m-mei b{font-family:"Yuji Boku",var(--serif);font-weight:400}
+
+.free-top{text-align:center;background:#fff;border-radius:22px;padding:16px 14px;margin:14px 0;box-shadow:0 4px 0 rgba(0,0,0,.06)}.ft-k{margin:0;font-weight:700}.free-top h2{font-family:var(--serif);font-size:22px;margin:4px 0 10px}.ft-l{margin:0 0 6px;font-size:12px;color:var(--muted);font-weight:700}
+.chips{display:flex;flex-wrap:wrap;gap:6px;justify-content:center}.chips span{background:var(--yama2);border:1px solid #f0d27a;border-radius:999px;padding:3px 12px;font-weight:900;font-family:var(--maru);font-size:14px}
+.rcard{background:#fff;border-radius:22px;padding:16px 16px 14px;margin:12px 0;box-shadow:0 4px 0 rgba(0,0,0,.06);border-top:6px solid var(--sora)}.rcard p{margin:6px 0 0;line-height:1.95}.rc-t{font-family:var(--maru);font-weight:900;font-size:17px;margin:0!important}.rc-t span{display:inline-block;font-size:11px;color:#fff;background:var(--sora);border-radius:999px;padding:1px 10px;margin-right:8px;vertical-align:2px}
+.r-lp{border-top-color:var(--momo)}.r-lp .rc-t span{background:var(--momo)}.r-ky{border-top-color:var(--wakaba)}.r-ky .rc-t span{background:var(--wakaba)}.r-mei{border-top-color:var(--sumi)}.r-mei .rc-t span{background:var(--sumi)}.rcard a{font-weight:700;color:var(--shu2)}
+.rc-y{margin-top:10px;background:var(--sora2);border-radius:14px;padding:10px 12px;font-size:14px;line-height:1.8}
+.free-hook{background:#1a1c45;color:#fff;border-radius:22px;padding:18px 16px;margin:18px 0 0;font-family:var(--serif);line-height:2}.free-hook p{margin:0 0 8px}.free-hook b{color:var(--yama)}
+
+.ch-sub{font-family:var(--maru)!important;font-weight:900;font-size:13px;color:var(--shu2);margin:18px 0 0!important;letter-spacing:.04em}.chapter p{text-align:justify}
+.yw-wrap{border-radius:22px;padding:26px 16px;margin:22px 0}.yw{text-align:center;color:#f3e9d6}.yw-k{margin:0;color:var(--kin);font-weight:700;font-size:13px;letter-spacing:.12em}.yw-h{font-family:var(--serif);font-weight:800;font-size:27px;line-height:1.5;margin:6px 0 14px;color:#fff}.yw-h em{font-style:normal;color:var(--kin2);border-bottom:2px solid var(--shu)}
+.yw-ph{display:grid;grid-template-columns:1fr 1fr;gap:8px;max-width:440px;margin:0 auto}.yw-ph img{width:100%;aspect-ratio:3/4;object-fit:cover;border:1px solid var(--kin)}
+.yw-st{list-style:none;padding:0;margin:16px auto 0;max-width:460px;text-align:left;counter-reset:y}.yw-st li{counter-increment:y;position:relative;padding:8px 0 8px 44px;border-bottom:1px solid #3e3026;font-size:14px}.yw-st li:before{content:counter(y);position:absolute;left:0;top:8px;width:32px;height:32px;border-radius:50%;border:1px solid var(--kin);color:var(--kin2);text-align:center;line-height:30px;font-family:var(--serif);font-weight:800}.yw-st b{display:block;color:#fff;font-family:var(--serif);font-size:16px}
+.yw-q{font-family:var(--serif);font-size:17px;line-height:1.9;margin:16px 0 4px;color:var(--kin2)}
+.cmpv{background:#fff;border-radius:22px;padding:16px 12px;margin:18px 0;box-shadow:0 4px 0 rgba(0,0,0,.06)}.cmpv h3{font-family:var(--maru);font-weight:900;text-align:center;margin:0 0 6px;font-size:19px}.cmpv img{width:100%;border-radius:12px}
+.cmpv-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}.cmpv-row div{border:2px solid var(--line);border-radius:14px;padding:8px 10px}.cmpv-row div.gold{border-color:var(--kin);background:#fffaf0}.cmpv-row b{display:block;font-family:var(--maru);font-weight:900;font-size:20px;color:var(--shu2)}.cmpv-row span{display:block;font-size:12px;padding:3px 0;border-top:1px dashed var(--line)}
+
 /* ===== v12: スマホ1画面目重視・3つの入口で雰囲気を変える ===== */
 .sec-tight{padding:34px 0}
 .khead{display:grid;grid-template-columns:92px 1fr;gap:8px;align-items:center;padding-top:14px}.khead img{width:92px;height:auto;filter:drop-shadow(0 4px 0 rgba(0,0,0,.12))}
