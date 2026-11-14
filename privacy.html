@@ -10,4 +10,5 @@
 <script>
 function signOf(m,d){const t=[[1,20,'aquarius'],[2,19,'pisces'],[3,21,'aries'],[4,20,'taurus'],[5,21,'gemini'],[6,22,'cancer'],[7,23,'leo'],[8,23,'virgo'],[9,23,'libra'],[10,24,'scorpio'],[11,23,'sagittarius'],[12,22,'capricorn']];let s='capricorn';for(const[mm,dd,n]of t){if(m>mm||(m==mm&&d>=dd))s=n}return s}
 document.querySelectorAll('form[data-diagnose]').forEach(f=>f.addEventListener('submit',e=>{e.preventDefault();const m=+f.m.value,d=+f.d.value;if(!m||!d)return;location.href='signs/'+signOf(m,d)+'.html#result'}));
+document.addEventListener('click',e=>{const a=e.target.closest('[data-plan]');if(a)localStorage.setItem('kuromitsu_plan',a.dataset.plan)},true);
 </script></body></html>
