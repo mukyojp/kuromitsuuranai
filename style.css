@@ -157,10 +157,21 @@ ol.wakaru{margin:6px 0 10px;padding:0;list-style:none;counter-reset:w;font-size:
 .card h3+p{margin-top:0}
 
 [hidden]{display:none!important}
+/* ===== UIレギュレーション（DESIGN_RULES.md）ボタンは3種類だけ ===== */
+html body .btn.yama{background:var(--sora)!important;color:#fff!important;box-shadow:0 5px 0 #2a8fc0!important}
+html body .btn,html body .s3btn,html body .s3-ume .s3btn,html body .s3-take .s3btn,html body .s3-matsu .s3btn{background:var(--shu)!important;color:#fff!important;box-shadow:0 5px 0 var(--shu2)!important;border:0!important}
+html body .btn.gold{background:linear-gradient(135deg,#f6e3a8 0%,#d9b062 50%,#b98a35 100%)!important;color:#1d1612!important;box-shadow:0 5px 0 #7a5a22!important;border:1px solid #fff3cf!important}
+html body .btn.ghost{background:#fff!important;color:var(--shu2)!important;border:2px solid var(--shu)!important;box-shadow:0 4px 0 var(--line)!important}
+html body .btn small{display:block;font-size:12px;font-weight:700;opacity:.92;margin-top:2px}
+html body .btn:active{transform:translateY(3px);box-shadow:0 2px 0 rgba(0,0,0,.25)!important}
+html body .first .btn{background:#fff!important;color:var(--shu2)!important;box-shadow:0 5px 0 #8f1f12!important}
+html body .stick .s1{background:#fff!important;color:#1f86bd!important;border:2px solid var(--sora)!important;box-shadow:0 3px 0 #2a8fc0!important}html body .stick .s2{background:var(--sora)!important;color:#fff!important;box-shadow:0 3px 0 #2a8fc0!important}
+
+.mamori{text-align:center;background:linear-gradient(180deg,#1b1530,#2a1d14);color:#f3e9d6;border-radius:22px;padding:20px 16px 16px;margin:14px 0;border:1px solid var(--kin)}.mm-k{margin:0;font-family:var(--serif);font-weight:800;font-size:17px;color:var(--kin2)}.mm-s{margin:10px auto 8px!important}.mm-s .ichi{color:#14100c}.mm-m{margin:0;font-family:var(--serif);font-size:15px}.mm-h{margin:12px 0 0;font-family:var(--serif);font-size:16px;line-height:1.7}.mm-h b{font-size:20px;color:#fff;border-bottom:2px solid var(--shu)}
 .osum{background:#fffaf0;border:2px solid var(--kin);border-radius:16px;padding:12px 14px}.osum-k{margin:0;font-size:12px;font-weight:900;color:var(--muted)}.osum h3{margin:2px 0 0;font-family:var(--serif);font-size:17px;line-height:1.5}.osum-p{margin:4px 0 0;font-family:var(--serif);font-weight:800;font-size:26px;color:var(--shu2)}.osum-p small{font-size:12px;color:var(--muted)}.osum ul{margin:6px 0 0;padding-left:1.2em;font-size:13px}
 .cq{display:grid;grid-template-columns:repeat(3,1fr);gap:0 6px;background:#fffaf0;color:var(--ink);border-radius:16px;padding:12px 8px;text-align:center}
 .cq-h{position:relative;border-radius:12px;padding:8px 4px;color:#fff}.cq-h img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:6px}.cq-h b{display:block;font-family:var(--serif);font-size:13px;margin-top:4px}.cq-p{font-family:var(--serif);font-weight:800;font-size:17px}.cq-p small{font-size:11px}
-.cq-h.s3-ume{background:#2b3a67}.cq-h.s3-take{background:#b8291b}.cq-h.s3-matsu{background:linear-gradient(160deg,#3a2c12,#14100a);border:1px solid var(--kin2)}.cq-h .s3rec{top:-10px;right:50%;transform:translateX(50%);font-size:10px;padding:2px 8px;background:var(--yama);color:var(--sumi)}
+.cq-h.s3-ume{background:#2b3a67}.cq-h.s3-take{background:#b8291b}.cq-h.s3-matsu{background:linear-gradient(160deg,#3a2c12,#14100a);border:1px solid var(--kin2)}.cq-h .s3rec{white-space:nowrap;top:-10px;right:50%;transform:translateX(50%);font-size:10px;padding:2px 8px;background:var(--yama);color:var(--sumi)}
 .cq-l{grid-column:1/-1;margin:10px 0 2px;font-size:12px;font-weight:900;color:var(--muted);border-top:1px solid var(--line);padding-top:8px}
 .cq-c{font-size:20px;font-weight:900;line-height:1.3}.cq-c.ok{color:var(--shu2)}.cq-c.no{color:#c9bfb2}.cq-c.cq-w{font-size:12px;font-weight:700;color:var(--ink)}
 .cq-b{margin-top:10px;display:block;border-radius:999px;padding:6px 0;font-size:12px;font-weight:900;text-decoration:none;color:#fff}.cq-b.s3-ume{background:#2b3a67}.cq-b.s3-take{background:#b8291b}.cq-b.s3-matsu{background:#6b5320}

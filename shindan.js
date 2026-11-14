@@ -35,10 +35,19 @@
     const name = sei + ' ' + mei;
     const [y, m, d] = b.split('-').map(Number);
     Object.assign(st, { name, sei, mei, birth: b, sign: signOf(y, m, d), lp: lifePath(y, m, d), ky: kyusei(y, m, d) });
-    st.direct = !quick; save(); renderFree();
+    st.direct = !quick; decideIchi(); save(); renderFree();
     if (quick) { show('#s2'); } else { st.ans = []; st.qi = 0; save(); renderQ(); show('#s3'); }
   });
   let quick = false; // トップの入力欄から来たときは、先に無料の結果を見せる
+  // あなたを守る一文字：生年月日とフルネームで一つに決まる（同じ入力なら、無料の結果でも第1章でも同じ字）
+  function decideIchi() {
+    const key = st.birth + '|' + st.sei + st.mei;
+    if (st.ichiKey === key && st.ichimoji) return;
+    const seed = [...key].reduce((a, c) => (a * 31 + c.charCodeAt(0)) >>> 0, 7);
+    const r = D.ichimoji[seed % D.ichimoji.length];
+    st.ichimoji = r['漢字']; st.ichiKey = key;
+  }
+  const ichiRow = () => D.ichimoji.find((r) => r['漢字'] === st.ichimoji) || D.ichimoji[0];
   // 名前の画数（姓名診断と同じ数え方。わからない字があれば null）
   function nameKaku(sei, mei) {
     const st_ = D.strokes || {}, get = (c) => st_[c] || 0;
@@ -59,7 +68,12 @@
     const best = (D.best[sg] || []).map((m) => m + '月').join('と');
     const catchS = (C.sign_catch && C.sign_catch[sg]) ? C.sign_catch[sg][0] : '';
     $('#free').innerHTML = `
-      <div class="kuro-say"><img src="img/cut/${sg}.png" alt="黒ねこの占い師くろみつ"><p>${call}さん、はじめまして。黒ねこの占い師、くろみつです。<br>あなたが生まれた日の空と、数字と、お名前を読みました。</p></div>
+      <div class="kuro-say"><img src="img/cut/${sg}.png" alt="黒ねこの占い師くろみつ"><p>${call}さん、お待ちしていました。<br>あなたが生まれた日の空と、数字と、お名前を読みましたよ。</p></div>
+      <div class="mamori"><p class="mm-k">${call}さんを守る一文字は</p><div class="shikishi mm-s"><div class="ichi">${esc(st.ichimoji)}</div><span class="rakkan">くろみつ</span></div>
+      <p class="mm-m">${esc(ichiRow()['込める意味'])}</p>
+      <p class="mm-h">書家・夢香が、あなたを守る書を<br><b>ひとつひとつ制作します。</b></p>
+      <a class="btn gold" href="#fsho">この一文字の書を授かる<small>待ち受け・ミニ色紙・額装色紙</small></a>
+      <p class="fine" style="margin:6px 0 0">画面の文字は書体です。お申し込み後、夢香が筆で書きます。</p></div>
       <div class="free-top"><p class="ft-k">${esc(st.name)}さんは</p><h2>${D.signs[sg]} × ${esc(lp[0])} × ${esc(ky[0])}</h2>
       <p class="ft-l">あなたをあらわすことば</p><div class="chips">${chips.map((c) => `<span>${esc(c)}</span>`).join('')}</div></div>
       <div class="rcard r-sei"><p class="rc-t"><span>西洋占星術</span>太陽星座　${D.signs[sg]}</p><p>${esc(signText)}</p>
@@ -131,11 +145,7 @@
     st.type = code; save();
     const theme = (st.themes && st.themes[0]) || '2027年の全体の流れ';
     // 運命の一文字：選んだテーマに合う候補から、生年月日と回答で一つに決める（同じ入力なら毎回同じ字）
-    const want = (D.theme_map[theme] || []);
-    let pool = D.ichimoji.filter((r) => want.includes(r['テーマ']));
-    if (!pool.length) pool = D.ichimoji;
-    const seed = [...(st.birth + code + st.ans.join(''))].reduce((a, c) => (a * 31 + c.charCodeAt(0)) >>> 0, 7);
-    const ichi = pool[seed % pool.length]; st.ichimoji = ichi['漢字']; save();
+    decideIchi(); const ichi = ichiRow(); save();
     const sg = st.sign, lp = D.lifepath[st.lp], ky = D.kyusei[st.ky];
     const ax = ['A', 'B', 'C', 'D'].map((x) => D.axis_text[x][score(x) >= 0 ? 0 : 1]);
     const call = esc(st.mei || st.name);
@@ -148,7 +158,7 @@
       ${ch1Html(call, sg, theme, tired, change, code, ax, lp, ky, tn)}
       </div>
       <h2 style="margin-top:30px">${call}さんの運命の一文字</h2>
-      <div class="card" style="text-align:center"><div class="shikishi"><div class="ichi">${esc(ichi['漢字'])}</div><span class="rakkan">くろみつ</span></div><p class="fine" style="margin:0 0 8px">※画面の文字は書体です。お申し込み後、書家・夢香が筆で書きます。</p><p style="margin:0">${esc(ichi['込める意味'])}。<br>「${esc(theme)}」を占ってほしいあなたを、そっと守る一文字です。</p>
+      <div class="card" style="text-align:center"><div class="shikishi"><div class="ichi">${esc(ichi['漢字'])}</div><span class="rakkan">くろみつ</span></div><p class="fine" style="margin:0 0 8px">※画面の文字は書体です。お申し込み後、書家・夢香が筆で書きます。</p><p style="margin:0">${esc(ichi['込める意味'])}。<br>生まれた日とお名前から選ばれた、${call}さんを守る一文字です。</p>
       <p class="fine" style="margin:10px 0 0">この一文字は、書家・夢香があなたのために筆で書くこともできます（下でご案内します）。</p></div>
       <div class="toc"><p class="toc-h">ここからは、${call}さんの2027年のお話です</p>
       <div class="ch"><b>第2章　2027年、運気がいちばん動く月</b><p>${call}さんの2027年でいちばん運気が動くのは、<span class="fuse">〇月</span>です。その月、生まれた日の星に……</p></div>
