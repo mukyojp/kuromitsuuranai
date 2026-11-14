@@ -157,6 +157,9 @@ ol.wakaru{margin:6px 0 10px;padding:0;list-style:none;counter-reset:w;font-size:
 .card h3+p{margin-top:0}
 
 [hidden]{display:none!important}
+html body .prem,html body .sec-dark{background-color:#120f24;background-image:linear-gradient(rgba(14,10,30,.55),rgba(14,10,30,.55)),url(img/t_night_gold.jpg);background-size:auto,420px}
+html body .shikishi{background-image:url(img/t_washi_gold.jpg)!important;background-size:cover!important}
+
 /* ===== UIレギュレーション（DESIGN_RULES.md）ボタンは3種類だけ ===== */
 html body .btn.yama{background:var(--sora)!important;color:#fff!important;box-shadow:0 5px 0 #2a8fc0!important}
 html body .btn,html body .s3btn,html body .s3-ume .s3btn,html body .s3-take .s3btn,html body .s3-matsu .s3btn{background:var(--shu)!important;color:#fff!important;box-shadow:0 5px 0 var(--shu2)!important;border:0!important}
