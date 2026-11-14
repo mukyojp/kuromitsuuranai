@@ -157,10 +157,16 @@ ol.wakaru{margin:6px 0 10px;padding:0;list-style:none;counter-reset:w;font-size:
 .card h3+p{margin-top:0}
 
 [hidden]{display:none!important}
-/* hero v18 */
-.hero-idx h1{font-size:21px!important;line-height:1.45;margin:10px 0 6px!important}.y27{display:inline-block;font-family:var(--maru);font-weight:900;background:var(--yama);color:var(--sumi);border-radius:8px;padding:0 8px;margin-right:6px;font-size:.95em;transform:rotate(-3deg)}
-.hi-row{display:grid;grid-template-columns:1fr 100px;gap:10px;align-items:end}.hi-sho{display:flex;align-items:center;gap:10px;text-decoration:none;color:#fff}.hi-sho img{width:118px;flex:none;filter:drop-shadow(0 4px 6px rgba(0,0,0,.18))}.hi-sho span{font-family:var(--serif);font-weight:800;font-size:15px;line-height:1.5}.hi-sho b{font-size:18px;color:var(--yama);border-bottom:2px solid var(--yama)}
-.hero-idx .hero-kuro img{width:92px!important}
+.cq{display:grid;grid-template-columns:repeat(3,1fr);gap:0 6px;background:#fffaf0;color:var(--ink);border-radius:16px;padding:12px 8px;text-align:center}
+.cq-h{position:relative;border-radius:12px;padding:8px 4px;color:#fff}.cq-h img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:6px}.cq-h b{display:block;font-family:var(--serif);font-size:13px;margin-top:4px}.cq-p{font-family:var(--serif);font-weight:800;font-size:17px}.cq-p small{font-size:11px}
+.cq-h.s3-ume{background:#2b3a67}.cq-h.s3-take{background:#b8291b}.cq-h.s3-matsu{background:linear-gradient(160deg,#3a2c12,#14100a);border:1px solid var(--kin2)}.cq-h .s3rec{top:-10px;right:50%;transform:translateX(50%);font-size:10px;padding:2px 8px;background:var(--yama);color:var(--sumi)}
+.cq-l{grid-column:1/-1;margin:10px 0 2px;font-size:12px;font-weight:900;color:var(--muted);border-top:1px solid var(--line);padding-top:8px}
+.cq-c{font-size:20px;font-weight:900;line-height:1.3}.cq-c.ok{color:var(--shu2)}.cq-c.no{color:#c9bfb2}.cq-c.cq-w{font-size:12px;font-weight:700;color:var(--ink)}
+.cq-b{margin-top:10px;display:block;border-radius:999px;padding:6px 0;font-size:12px;font-weight:900;text-decoration:none;color:#fff}.cq-b.s3-ume{background:#2b3a67}.cq-b.s3-take{background:#b8291b}.cq-b.s3-matsu{background:#6b5320}
+.cq>span:empty{display:none}
+.s3d.s3-ume{border-color:#6f86c6!important;background:linear-gradient(180deg,#1d2647,#1c1512 40%)!important}.s3d.s3-take{border-color:#e0705f!important;background:linear-gradient(180deg,#4a1a14,#1c1512 40%)!important}
+.s3-ume .s3btn{background:linear-gradient(135deg,#4a64a8,#2b3a67)!important;box-shadow:0 4px 0 #18203d!important}.s3-take .s3btn{background:linear-gradient(135deg,#e04a35,#b8291b)!important;box-shadow:0 4px 0 #6e170e!important}
+
 /* 梅竹松 */
 .sho3{color:#f3e9d6;text-align:center;margin-top:22px}.s3k{margin:0;color:var(--kin);letter-spacing:.3em;font-weight:700;font-size:13px}.sho3 h3{font-family:var(--serif);font-weight:800;font-size:23px;line-height:1.5;margin:6px 0 4px;color:#fff}.s3l{margin:0 0 10px;font-size:13px;color:#d9c9a8}
 .s3top{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;align-items:end}.s3c{position:relative;display:flex;flex-direction:column;align-items:center;text-decoration:none;color:#fff;border-radius:12px;padding:20px 4px 8px;border:1px solid}
